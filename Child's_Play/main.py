@@ -1,7 +1,6 @@
 from itertools import permutations
 
-sum = 4
-#sum = int(input("Enter a sum: "))
+sum = int(input("Enter a sum: "))
 q = [1] * sum
 
 def rewrite(arg):
