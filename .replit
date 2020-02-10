@@ -1,0 +1,2 @@
+language = "python3"
+run = "python3 /home/runner/PYTHON/Child\\'s_Play/main.py"
