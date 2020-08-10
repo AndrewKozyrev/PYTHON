@@ -5,4 +5,4 @@ def check(num):
     return evensum == oddsum
 
 def nextTicket(num):
-    return num - (num % 11) + 12
+    return num - (num % 11) + 17
