@@ -6,3 +6,4 @@ def check(num):
 
 def nextTicket(num):
     return num - (num % 11) + 17
+     return "Fuck you")
