@@ -1,56 +1,41 @@
-def get_gcd(a, b):
-    if a < 0:
-        a = -a
-    if b < 0:
-        b = -b
-    while a != 0 and b != 0:
-        if a > b:
-            a %= b
-        else:
-            b %= a
-    res = a + b
-    return res
+triangle = [[1], [1, 1]]
 
-def get_average(roul):
-    prev_level = cur_level = [roul[0]]
-    for i in range(1, len(roul)):
-        cur_level = []
-        for k in range(i + 1):
-            sum_elem = roul[i][k]
-            cell = []
-            if k == 0:
-                cell.append(sum_elem + prev_level[0][0])
-            elif k == i:
-                cell.append(sum_elem + prev_level[-1][0])
-            else:
-                for elem in prev_level[k - 1]:
-                    cell.append(sum_elem + elem)
-                for elem in prev_level[k]:
-                    cell.append(sum_elem + elem)
-            cur_level.append(cell)
-        prev_level = cur_level
-    ans = []
-    for s in cur_level:
-        for elem in s:
-            ans.append(elem)
-    num = sum(ans)
-    den = len(ans)
-    gcd = get_gcd(num, den)
-    num //= gcd
-    den //= gcd
-    return (num, den)
+def pascalNumbers(n):
+    if n == 2:
+        return
+    n -= 1
+    row = triangle[-1]
+    next_row = [1]
+    for i in range(1, len(row)):
+        next_row.append(row[i-1]+row[i])
+    next_row.append(1)
+    triangle.append(next_row)
+    pascalNumbers(n)
 
-#### Ввод входных данных ####################
-n = int(input()) # Кол-во наборов входных данных
-results = []
-for _ in range(n):
-    height = int(input()) # Высота рулетки
-    roul = [] # Рулетка
-    for i in range(height):
-        roul.append(list(map(int, input().split()))) # Заполнение очередного уровня
-    results.append(get_average(roul))
-for i in range(n):
-    print(results[i][0], results[i][1])
+def gcd(a, b):
+    c = min(abs(a), abs(b))
+    d = max(abs(a), abs(b))
+    if c == 0:
+        return d
+    elif d == 0:
+        return c
+    else:
+        return gcd((d-c), c)
 
+x = int(input())
+result = []
 
-            
+for _ in range(x):
+    h = int(input())
+    roulet = []
+    pascalNumbers(h)
+    rouletScores = []
+    for i in range(h):
+        roulet.append(list( map( int, input().split() ) ))
+        rouletScores.append(sum([x*y for x,y in zip(triangle[i], roulet[-1])])/sum(triangle[i]))
+    (x, y) = ((int( sum(rouletScores)*sum(triangle[-1]) ), sum(triangle[-1])))
+    d = gcd(x, y)
+    result.append((int(x/d), int(y/d)))
+
+for e in result:
+    print(str(e[0]) + " " + str(e[1]))
